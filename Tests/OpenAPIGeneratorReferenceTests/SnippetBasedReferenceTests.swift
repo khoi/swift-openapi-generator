@@ -333,6 +333,25 @@ final class SnippetBasedReferenceTests: XCTestCase {
             """
         )
     }
+    
+    func testComponentsSchemasNull() throws {
+        try self.assertSchemasTranslation(
+                """
+                schemas:
+                  Null:
+                    type: "null"
+                  NullArray:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Null"
+                """,
+                """
+                public enum Schemas {
+                    public typealias Null = Swift.Void?
+                    public typealias NullArray = [Components.Schemas.Null]
+                }
+                """)
+    }
 
     func testComponentsSchemasNullableStringProperty() throws {
         try self.assertSchemasTranslation(

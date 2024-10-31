@@ -328,7 +328,9 @@ struct TypeMatcher {
             // arrays are already recursed-into by _tryMatchTypeRecursive
             // so just return nil here
             return nil
-        case .reference, .not, .all, .any, .one, .null:
+        case .null:
+            typeName = .swift("Void?")
+        case .reference, .not, .all, .any, .one:
             // never built-in
             return nil
         }
